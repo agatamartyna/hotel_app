@@ -178,21 +178,6 @@ class BookingManager(Resource):
             if key not  in request.json.keys():
                 return jsonify({"Message": "Input data incomplete"})
 
-        if (
-                type(request.json['name']) != str or
-                type(request.json["start"]) != list or
-                type(request.json["end"]) != list or
-                type(request.json["rooms"]) != list
-        ):
-            return jsonify({"Message": "Invalid data."})
-
-        for item in request.json["start"] + request.json["end"]:
-            if type(item) != int:
-                return jsonify({"Message": "Invalid data."})
-        for item in request.json["rooms"]:
-            if type(item != int):
-                return jsonify({"Message": "Invalid data."})
-
         name = request.json['name']
         start = datetime.datetime(request.json['start'][0], request.json['start'][1], request.json['start'][2])
         end = datetime.datetime(request.json['end'][0], request.json['end'][1], request.json['end'][2])
@@ -211,7 +196,7 @@ class BookingManager(Resource):
         db.session.add(booking)
         db.session.commit()
         return jsonify({
-            'Message': f'Booking:  {name} from {start} to {end} inserted.'
+            'Message': f'Booking:  {name} from {start.strftime("%Y-%m-%d")} to {end.strftime("%Y-%m-%d")} inserted.'
         })
 
     @staticmethod
