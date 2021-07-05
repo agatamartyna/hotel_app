@@ -134,7 +134,7 @@ def add_data(booking):
     prices = {"A": 200, "B": 150, "C": 100, "D": 50}
     if booking.rooms:
         data["rooms"] = [room.number for room in booking.rooms]
-        cost = [prices[room.rating] * data["duration"] for room in booking.rooms]
+        cost = sum([prices[room.rating] * data["duration"] for room in booking.rooms])
         data['total cost'] = cost
 
     return data
